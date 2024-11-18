@@ -5,31 +5,46 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.Writer;
+import java.io.InputStream;
+import java.util.Iterator;
+import java.util.Objects;
 
 @WebServlet("*.thtml")
 public class TemplateHandlerServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
 
+        String contextPath = request.getContextPath();
+        String pathInfo = request.getPathInfo();
+        String servletPath = request.getServletPath();
+
+        Iterator<String> iter = request.getAttributeNames().asIterator();
+        while (iter.hasNext()) {
+            String name = iter.next();
+            System.out.println(name);
+            Object value = request.getAttribute(name);
+            System.out.println(value);
+        }
+
+
+
+        InputStream inputStream = TemplateHandlerServlet
+                .class.getClassLoader().getResourceAsStream(request.getServletPath());
+
         try {
-            Writer writer = response.getWriter();
+            byte[] content = inputStream.readAllBytes();
 
-            writer.write("<!doctype html>");
-            writer.write("<html lang=\"en\">");
-            writer.write("<head>");
-            writer.write("<meta charset=\"UTF-8\">");
-            writer.write("<title>ExtendedServlet</title>");
-            writer.write("</head>");
-            writer.write("<body>");
-            writer.write("<h1>HttpServletExample</h1>");
-            writer.write("</body>");
-            writer.write("</html>");
+            String contentTemplate = new String(content);
 
+            // Заменить параметры значениями
+
+            response.getWriter().write(contentTemplate);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
 
     }
 

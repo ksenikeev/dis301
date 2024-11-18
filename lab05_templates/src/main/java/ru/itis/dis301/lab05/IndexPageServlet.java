@@ -8,10 +8,14 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet("/")
+@WebServlet("")
 public class IndexPageServlet extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
+
+        // Формирование параметров для шаблона
+        request.setAttribute("param1", "param1_value");
+        request.setAttribute("param2", "param2_value");
 
         try {
             // Перенаправляем запрос к сервлету-шаблонизатору
