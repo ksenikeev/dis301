@@ -29,6 +29,7 @@ public class TemplateHandlerServlet extends HttpServlet {
 
 
 
+
         InputStream inputStream = TemplateHandlerServlet
                 .class.getClassLoader().getResourceAsStream(request.getServletPath());
 
