@@ -28,6 +28,8 @@
 
 ## Lombok
 
+Экономия времени и пространства на стандартных геттерах и сеттерах (билдерах, ...)
+
 ```
     <dependency>
         <groupId>org.projectlombok</groupId>
@@ -37,8 +39,14 @@
     </dependency>
 ```
 
-## PostgreSQL
+В Intellij IDEA установите плагин Lombok
 
+Геттеры и сеттеры для всех нестатических членов класса можно описать аннотациями класса @Getter @Setter 
+
+
+## JDBC, PostgreSQL
+
+- Для каждой СУБД используется своя реализация JDBC спецификации, необходимо включить ее в проект
 ```
     <dependency>
         <groupId>org.postgresql</groupId>
@@ -46,6 +54,70 @@
         <version>42.6.0</version>
     </dependency>
 ```
+### Работа с JDBC
+```
+    // Загружаем драйвер
+    Class.forName("org.postgresql.Driver");
+    // Создаем подключение, после использования необходимо закрыть connection.close()
+    Connection connection =
+                    DriverManager.getConnection(
+                            // адрес БД , имя пользователя, пароль
+                            "jdbc:postgresql://localhost:5432/db_name","postgres","passwd");
+                        
+    // Создание оболочки для выполнения SQL выражений, после использования необходимо закрыть
+    Statement statement = connection.createStatement();
+    
+    // Выполнение запроса (любая SQL команда) 
+    boolean result = statement.execute("insert into ... ");
+    
+    // Запрос на изменение данных (insert, update) с возвратом количества измененных записей
+    int result = statement.executeUpdate(
+                    "update bank set name= 'Bank' ");
+    
+    // Запрос на выборку данных
+    PreparedStatement statement =
+                    connection.prepareStatement("SELECT * FROM bank where id= ? ");
+    statement.setInt(1, id);
+
+    ResultSet resultSet = statement.executeQuery();
+
+    while (resultSet.next()) {
+        System.out.println(resultSet.getString("bik"));
+        System.out.println(resultSet.getString("name"));
+    }
+
+    resultSet.close();
+    
+
+```
+
+
+
+## Миграции Flyway
+
+```
+<dependency>
+    <groupId>org.flywaydb</groupId>
+    <artifactId>flyway-core</artifactId>
+    <version>10.21.0</version>
+</dependency>
+
+<dependency>
+    <groupId>org.flywaydb</groupId>
+    <artifactId>flyway-database-postgresql</artifactId>
+    <version>10.21.0</version>
+    <scope>runtime</scope>
+</dependency>
+```
+- Скрипты с миграциями располагаем в директории по умолчанию resources/db/migration
+- Файлы именуем: V1_0__description_first.sql V1_1__description_second.sql
+- Скрипт содержит SQL команды, формирующие изменения в БД (create, insert, update, alter, ... )
+- Перед стартом основной логики работы приложения отрабатываем миграцию:
+    ```
+        Flyway flyway = Flyway.configure()
+                .dataSource("jdbc:postgresql://localhost:5432/db_name", "postgres", "password").load();
+        flyway.migrate(); 
+    ```
 
 ## Freemarker
 
