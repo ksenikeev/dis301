@@ -95,6 +95,11 @@
 
 ## Миграции Flyway
 
+Миграции БД в проекте - механизм, позволяющий вести историю изменений структуры БД
+
+Удобно сопровождать фиксирование изменений (например git) в структуре приложения, затрагивающие работу с БД, 
+соответствующим скриптом-миграцией. 
+
 ```
 <dependency>
     <groupId>org.flywaydb</groupId>
@@ -110,7 +115,7 @@
 </dependency>
 ```
 - Скрипты с миграциями располагаем в директории по умолчанию resources/db/migration
-- Файлы именуем: V1_0__description_first.sql V1_1__description_second.sql
+- Файлы именуем: `V1_0__description_first.sql, V1_1__description_second.sql`
 - Скрипт содержит SQL команды, формирующие изменения в БД (create, insert, update, alter, ... )
 - Перед стартом основной логики работы приложения отрабатываем миграцию:
     ```
@@ -118,9 +123,15 @@
                 .dataSource("jdbc:postgresql://localhost:5432/db_name", "postgres", "password").load();
         flyway.migrate(); 
     ```
+- Механизм миграций отработает только те скрипты, которые ранее не выполнялись (контроль по журналу версий)
 
 ## Freemarker
 
+Freemarker - довольно удобный и быстрый шаблонизатор
+
+### Использование Freemarker в веб приложении (сервлеты)
+
+1. Подключаем к проекту библиотеку 
 ```
     <dependency>
         <groupId>org.beangle.jakarta</groupId>
@@ -128,6 +139,102 @@
         <version>2.3.31</version>
     </dependency>
 ```
+2. Регистрируем сервлет, отрабатывающий обработку шаблонов (в файле web.xml)
+```
+    <servlet>
+        <servlet-name>freemarker</servlet-name>
+        <servlet-class>freemarker.ext.servlet.FreemarkerServlet</servlet-class>
+
+        <!--
+          Init-param documentation:
+          https://freemarker.apache.org/docs/api/freemarker/ext/servlet/FreemarkerServlet.html
+        -->
+
+        <!-- FreemarkerServlet settings: -->
+        <init-param>
+            <param-name>TemplatePath</param-name>
+            <param-value>classpath:template</param-value>
+        </init-param>
+        <init-param>
+            <param-name>NoCache</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>ResponseCharacterEncoding</param-name>
+            <!-- Use the output_encoding setting of FreeMarker: -->
+            <param-value>fromTemplate</param-value>
+        </init-param>
+        <init-param>
+            <param-name>ExceptionOnMissingTemplate</param-name>
+            <!-- true => HTTP 500 on missing template, instead of HTTP 404. -->
+            <param-value>true</param-value>
+        </init-param>
+
+        <!-- FreeMarker engine settings: -->
+        <init-param>
+            <param-name>incompatible_improvements</param-name>
+            <param-value>2.3.31</param-value>
+            <!--
+              Recommended to set to a high value.
+              See: https://freemarker.apache.org/docs/pgui_config_incompatible_improvements.html
+            -->
+        </init-param>
+        <init-param>
+            <param-name>template_exception_handler</param-name>
+            <!-- Use "html_debug" during development! -->
+            <param-value>rethrow</param-value>
+        </init-param>
+        <init-param>
+            <param-name>template_update_delay</param-name>
+            <!-- Use 0 during development! Consider what value you need otherwise. -->
+            <param-value>30 s</param-value>
+        </init-param>
+        <init-param>
+            <param-name>default_encoding</param-name>
+            <!-- The encoding of the template files: -->
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>output_encoding</param-name>
+            <!-- The encoding of the template output; Note that you must set
+                 "ResponseCharacterEncodring" to "fromTemplate" for this to work! -->
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>locale</param-name>
+            <!-- Influences number and date/time formatting, etc. -->
+            <param-value>en_US</param-value>
+        </init-param>
+        <init-param>
+            <param-name>number_format</param-name>
+            <param-value>0.##########</param-value>
+        </init-param>
+
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>freemarker</servlet-name>
+        <url-pattern>*.ftl</url-pattern>
+        <url-pattern>*.ftlxxx</url-pattern>
+        <!-- HTML and XML auto-escaped if incompatible_improvements >= 2.3.24: -->
+        <url-pattern>*.ftlh</url-pattern>
+        <url-pattern>*.ftlx</url-pattern>
+    </servlet-mapping>
+```
+3. Шаблоны располагаем в директории (по-умолчанию) resources/template
+4. В сервлетах, ответственных за возврат html контента используем конструкцию вида
+```
+        // кладем в атрибуты запроса данные, эти атрибуты будут обработаны шаблонизатором
+        request.setAttribute("clientid", clientId);
+        request.setAttribute("clientname", clientName);
+        request.setAttribute("hello", "Hello for freemarker!");
+
+        //Передаем управление диспетчеру, говоря, что требуется вызвать сервлет по пути
+        // index.ftl
+        request.getRequestDispatcher("index.ftl").forward(request, response);
+```
+
 
 ## JS
 
