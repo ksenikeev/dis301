@@ -8,7 +8,7 @@ create table users (
     userrole character varying(50)
 );
 
-insert into users (username, password) values ('admin', '$2a$10$eVd7gUyIfgYKYWW0/eUwoek9h1LqwMXDgzPK7liSY79CtzPCDjTNi');
+insert into users (username, password, userrole) values ('admin', '$2a$10$eVd7gUyIfgYKYWW0/eUwoek9h1LqwMXDgzPK7liSY79CtzPCDjTNi', 'ADMIN');
 
 create sequence client_seq;
 

@@ -1,4 +1,4 @@
-package ru.itis.dis301.lab09.bcrypt;
+package ru.itis.dis301.lab10.bcrypt;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 /*
@@ -38,5 +38,22 @@ public class BCryptService {
         $2a$10$eh8/xxDh0RVh3Jz/7K9zUOEEYPHTdLBSAd/6tRRVP/2YNjB8mc8Hq
 
 */
+
+
     }
+
+
+
 }
+/*
+        String salt = BCrypt.gensalt(10);
+        System.out.println(salt);
+        String hash = BCrypt.hashpw("password", salt);
+        System.out.println(hash);
+
+        System.out.println(bCrypt.encode("password"));
+
+        System.out.println(bCrypt.matches("password",
+                "$2a$10$gxCDGtAffcdxxK.P4.DuSu8weUIzoa75vcmcbK.m5sispqoA.WLKW"));
+
+ */
