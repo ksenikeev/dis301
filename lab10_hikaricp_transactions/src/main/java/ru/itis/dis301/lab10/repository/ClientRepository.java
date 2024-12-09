@@ -3,11 +3,10 @@ package ru.itis.dis301.lab10.repository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ru.itis.dis301.lab10.model.Client;
+import ru.itis.dis301.lab10.model.ClientInfo;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ClientRepository {
@@ -21,7 +20,36 @@ public class ClientRepository {
     }
 
     public List<Client> findAll() {
-        return null;
+        List<Client> clients = new ArrayList<>();
+
+        try (Connection connection = db.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(
+                    "select * from client natural join client_info ");
+
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                ClientInfo clientInfo = new ClientInfo(
+                        resultSet.getString("phone"),
+                        resultSet.getString("address"),
+                        resultSet.getString("passport")
+                );
+
+                Client client = new Client(
+                        resultSet.getLong("id"),
+                        resultSet.getString("name"),
+                        resultSet.getString("email"),
+                        clientInfo
+                );
+                clients.add(client);
+            }
+
+            resultSet.close();
+            statement.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return clients;
     }
 
     public Client addClient(Client client) {

@@ -32,7 +32,7 @@
 
 <div id="new_client" style="display:none;">
 <form method="post" action="/client/save">
-    <div><input name="clientname" type="text" placeholder="clientname"></div>
+    <div><input name="name" type="text" placeholder="clientname"></div>
     <div><input name="email" type="text" placeholder="email"></div>
     <div><input name="phone" type="text" placeholder="phone"></div>
     <div><input name="address" type="text" placeholder="address"></div>

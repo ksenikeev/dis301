@@ -12,28 +12,26 @@ import ru.itis.dis301.lab10.model.ClientInfo;
 import ru.itis.dis301.lab10.service.ClientService;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
-@WebServlet("/index")
-public class IndexPageServlet extends HttpServlet {
+@WebServlet("/client/save")
+public class ClientSaveServlet extends HttpServlet {
 
-    final static Logger logger = LogManager.getLogger(IndexPageServlet.class);
+    final static Logger logger = LogManager.getLogger(ClientSaveServlet.class);
 
     private ClientService service = new ClientService();
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response) {
+    public void doPost(HttpServletRequest request, HttpServletResponse response) {
         try{
 
             ClientInfo clientInfo = new ClientInfo();
-            clientInfo.setAddress("Казань");
-            clientInfo.setPassport("9202 2342342");
-            clientInfo.setPhone("+791028723");
+            clientInfo.setAddress(request.getParameter("address"));
+            clientInfo.setPassport(request.getParameter("passport"));
+            clientInfo.setPhone(request.getParameter("phone"));
 
             Client client = new Client();
             client.setClientInfo(clientInfo);
-            client.setName("User");
-            client.setEmail("user@masd.ru");
+            client.setName(request.getParameter("name"));
+            client.setEmail(request.getParameter("email"));
 
             service.save(client);
 
@@ -46,8 +44,5 @@ public class IndexPageServlet extends HttpServlet {
         } catch (ServletException e) {
             logger.error(e);
         }
-
-
     }
-
 }

@@ -8,4 +8,12 @@ public class ClientInfo {
     private String phone;
     private String address;
     private String passport;
+
+    public ClientInfo() {}
+
+    public ClientInfo(String phone, String address, String passport) {
+        this.phone = phone;
+        this.address = address;
+        this.passport = passport;
+    }
 }

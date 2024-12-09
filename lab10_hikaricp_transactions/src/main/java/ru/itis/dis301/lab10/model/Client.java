@@ -9,4 +9,13 @@ public class Client {
     private String name;
     private String email;
     private ClientInfo clientInfo;
+
+    public Client() {}
+
+    public Client(Long id, String name, String email, ClientInfo clientInfo) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.clientInfo = clientInfo;
+    }
 }
