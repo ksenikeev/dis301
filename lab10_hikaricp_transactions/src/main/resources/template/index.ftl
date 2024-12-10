@@ -31,7 +31,7 @@
 <button id="btn_show_hide" onclick="show_hide_form();">Добавить клиента<span><img src="static/img/arrow-down.svg" height="24px"/></span></button>
 
 <div id="new_client" style="display:none;">
-<form method="post" action="/client/save">
+<form method="post" action="client/save">
     <div><input name="name" type="text" placeholder="clientname"></div>
     <div><input name="email" type="text" placeholder="email"></div>
     <div><input name="phone" type="text" placeholder="phone"></div>

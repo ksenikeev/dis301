@@ -37,7 +37,7 @@ public class ClientSaveServlet extends HttpServlet {
 
             request.setAttribute("clients", service.findAll());
 
-            request.getRequestDispatcher("index.ftl").forward(request, response);
+            request.getRequestDispatcher("/index.ftl").forward(request, response);
 
         } catch (IOException e) {
             logger.error(e);

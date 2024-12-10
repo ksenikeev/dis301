@@ -24,23 +24,9 @@ public class IndexPageServlet extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
         try{
-
-            ClientInfo clientInfo = new ClientInfo();
-            clientInfo.setAddress("Казань");
-            clientInfo.setPassport("9202 2342342");
-            clientInfo.setPhone("+791028723");
-
-            Client client = new Client();
-            client.setClientInfo(clientInfo);
-            client.setName("User");
-            client.setEmail("user@masd.ru");
-
-            service.save(client);
-
             request.setAttribute("clients", service.findAll());
 
-            request.getRequestDispatcher("index.ftl").forward(request, response);
-
+            request.getRequestDispatcher("/index.ftl").forward(request, response);
         } catch (IOException e) {
             logger.error(e);
         } catch (ServletException e) {
