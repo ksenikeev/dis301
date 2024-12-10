@@ -14,15 +14,16 @@
             width:100%;
             display:flex;
             justify-content:center;
+            flex-wrap: wrap;
         }
         .leftblock {
-            width:10%;
+            flex-grow:1;
         }
         .centerblock {
-            width:80%;
+            flex-grow:8;
         }
         .rigthblock {
-            width:10%;
+            flex-grow:1;
         }
         .footer {
             display:flex;
