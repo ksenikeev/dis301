@@ -10,13 +10,34 @@
             display:flex;
             justify-content:center;
         }
+        .content {
+            width:100%;
+            display:flex;
+            justify-content:center;
+        }
+        .leftblock {
+            width:10%;
+        }
+        .centerblock {
+            width:80%;
+        }
+        .rigthblock {
+            width:10%;
+        }
+        .footer {
+            display:flex;
+            justify-content:center;
+        }
     </style>
 </head>
 <body>
 <div class="header">
     <h1>Управление клиентами</h1>
 </div>
+<div class="content">
 
+<div class="leftblock"></div>
+<div class="centerblock">
 <h2>Список клиентов</h2>
 <table>
     <#list clients as client>
@@ -60,5 +81,12 @@
        }
     }
 </script>
+</div>
+<div class="rigthblock"></div>
+
+</div> <!-- content -->
+<div class="footer">
+    &copy;ИТИС
+</div>
 </body>
 </html>
