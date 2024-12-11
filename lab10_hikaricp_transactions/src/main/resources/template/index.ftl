@@ -65,6 +65,12 @@
 </div>
 
 <script>
+
+    window.onbeforeunload = function() {
+        console.log("window.onbeforeunload");
+        return false;
+    };
+
     let state_form = 0;
 
     function show_hide_form() {
