@@ -126,8 +126,8 @@ JOptionPane.showMessageDialog(родительская_компонента, с�
 ```java
 ...
 ImageIcon icon = new ImageIcon("favico.png");
-                JOptionPane.showMessageDialog(
-                        null, "Форма ввод данных", "справочная",
-                        JOptionPane.INFORMATION_MESSAGE, icon);
+JOptionPane.showMessageDialog(
+    null, "Форма ввод данных", "справочная",
+    JOptionPane.INFORMATION_MESSAGE, icon);
 ...
 ```

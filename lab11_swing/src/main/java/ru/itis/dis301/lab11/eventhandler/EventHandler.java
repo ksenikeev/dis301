@@ -1,4 +1,4 @@
-package ru.itis.dis301.lab11;
+package ru.itis.dis301.lab11.eventhandler;
 
 import javax.swing.*;
 import java.awt.*;
