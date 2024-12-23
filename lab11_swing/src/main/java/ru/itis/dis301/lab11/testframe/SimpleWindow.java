@@ -12,6 +12,8 @@ public class SimpleWindow extends JFrame {
         this.setSize(600, 600);
         // Заголовок окна
         this.setTitle("Simple Window");
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        this.setUndecorated(true);
         // Показываем
         this.setVisible(true);
     }
