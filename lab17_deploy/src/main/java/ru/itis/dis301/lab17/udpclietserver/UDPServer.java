@@ -27,21 +27,24 @@ public class UDPServer {
 
         Runtime.getRuntime().addShutdownHook(stopServerHook);
 
-        while(true) {
-            try {
-                DatagramSocket datagramSocket = new DatagramSocket(50000);
-                byte[] buffer = new byte[1400];
-                while (true) {
-                    DatagramPacket packet = new DatagramPacket(buffer, 1400);
-                    datagramSocket.receive(packet);
+        try {
+            DatagramSocket datagramSocket = new DatagramSocket(50000);
+            byte[] buffer = new byte[1400];
+            while (true) {
+                DatagramPacket packet = new DatagramPacket(buffer, 1400);
+                datagramSocket.receive(packet);
 
-                    logger.info(new String(buffer, 0, packet.getLength()) + " packet length " + packet.getLength());
+                logger.info(new String(buffer, 0, packet.getLength())
+                        + " packet length " + packet.getLength()
+                        + " packet address " + packet.getAddress()
+                        + " packet port " + packet.getPort()
+                );
 
-                }
-                // datagramSocket.close();
-            } catch (IOException e) {
-                throw new RuntimeException(e.getMessage());
+                //packet.
             }
+            // datagramSocket.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e.getMessage());
         }
     }
 
