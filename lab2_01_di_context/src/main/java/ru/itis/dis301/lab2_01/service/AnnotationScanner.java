@@ -1,5 +1,7 @@
 package ru.itis.dis301.lab2_01.service;
 
+import ru.itis.dis301.lab2_01.annotation.Inject;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;

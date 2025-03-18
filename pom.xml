@@ -10,6 +10,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>lab2_01_di_context</module>
+        <module>lab2_02_embeded_tomcat</module>
     </modules>
 
     <properties>
