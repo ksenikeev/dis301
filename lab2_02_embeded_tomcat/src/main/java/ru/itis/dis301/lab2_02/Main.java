@@ -8,6 +8,8 @@ import org.apache.catalina.Context;
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.connector.Connector;
 import org.apache.catalina.startup.Tomcat;
+import ru.itis.dis301.lab2_02.servlets.DispatcherServlet;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -33,6 +35,7 @@ public class Main {
         /*
             Создаем сервлет, лучше разместить этот код в отдельном файле
          */
+/*
         HttpServlet servlet = new HttpServlet() {
             @Override
             protected void service(HttpServletRequest req, HttpServletResponse resp)
@@ -47,12 +50,13 @@ public class Main {
                 writer.println("</body></html>");
             }
         };
+*/
 
         /*
             Динамически подключаем севлет
          */
         String servletName = "dispatcherServlet"; // любое уникальное имя
-        tomcat.addServlet(contextPath, servletName, servlet);
+        tomcat.addServlet(contextPath, servletName, new DispatcherServlet());
         // Указываем имя ресурса и сервлет, который этот ресурс будет обрабатывать
         // (по пути "/*" наш сервлет будет перехватывать все запросы)
         tomcatContext.addServletMappingDecoded("/*", servletName);
