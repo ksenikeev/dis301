@@ -14,6 +14,7 @@ public class DispatcherServlet extends HttpServlet {
     public void service(HttpServletRequest request, HttpServletResponse response) {
 
         String path = request.getPathInfo();
+        String httpMethod = request.getMethod().toUpperCase();
 
         TestController controller = new TestController();
 
