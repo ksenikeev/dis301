@@ -14,7 +14,7 @@ public class TestController {
 
     @GetRequest("/test")
     public Model getTestPage(HttpServletRequest request, HttpServletResponse response) {
-
+        // ...
         Model model = new Model("test");
         model.add("param1", "value1");
         model.add("param2", "value2");
