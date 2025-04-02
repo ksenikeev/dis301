@@ -5,17 +5,14 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.io.Closeable;
-import java.io.InputStream;
-import java.util.HashMap;
+import java.sql.SQLException;
 
 public class EntityManagerFactory implements Closeable {
 
     final static Logger logger = LogManager.getLogger(EntityManagerFactory.class);
 
     private DataSource dataSource;
-    private DbConfig dbConfig;
 
     public EntityManagerFactory() {
         try {
@@ -40,6 +37,9 @@ public class EntityManagerFactory implements Closeable {
         ((HikariDataSource) dataSource).close();
     }
 
+    public EntityManager createEntityManager() throws SQLException {
+        return new EntityManagerImpl(dataSource.getConnection());
+    }
 
 
 }
