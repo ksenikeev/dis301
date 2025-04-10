@@ -8,6 +8,6 @@ import java.util.Set;
 @Getter@Setter
 @Entity
 public class Actor extends Person {
-    @ManyToMany
+    @ManyToMany(cascade=CascadeType.PERSIST)
     Set<Genre> genres;
 }
