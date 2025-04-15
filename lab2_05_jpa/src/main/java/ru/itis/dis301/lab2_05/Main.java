@@ -1,13 +1,12 @@
 package ru.itis.dis301.lab2_05;
 
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
+import jakarta.persistence.*;
 import ru.itis.dis301.lab2_05.model.Actor;
 import ru.itis.dis301.lab2_05.model.Genre;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class Main {
@@ -39,7 +38,21 @@ public class Main {
         addActor("Дикаприо ", genres, entityManager);
 */
 
-        removeActor(4l, entityManager);
+        //removeActor(4l, entityManager);
+
+        renameActor(3l, "Gerard Depardieu", entityManager);
+
+        //findAllNative(entityManager).forEach(System.out::println);
+
+/*
+        entityManager.getTransaction().begin();
+        Actor actor = findByIdEager(1l, entityManager);
+        Set<Genre> genres = actor.getGenres();
+        System.out.println(actor);
+        genres.forEach(System.out::println);
+        actor.setName("Евгений Леонов");
+        entityManager.getTransaction().commit();
+*/
 
         entityManager.close();
         emf.close();
@@ -78,4 +91,48 @@ public class Main {
         em.getTransaction().commit();
     }
 
+    private static List<Actor> findAll(EntityManager em) {
+        Query query = em.createQuery("select a from Actor a ");
+
+        List<Actor> result = query.getResultList();
+        return result;
+    }
+
+    private static Actor findById(Long id, EntityManager em) {
+        Query query = em.createQuery("select a from Actor a where id = :id ");
+        query.setParameter("id", id);
+        try {
+            Actor result = (Actor) query.getSingleResult();
+            return result;
+        } catch (PersistenceException e) {
+            return null;
+        }
+
+    }
+
+    private static Actor findByIdEager(Long id, EntityManager em) {
+        Query query = em.createQuery("select a from Actor a LEFT JOIN FETCH a.genres where a.id = :id ");
+        query.setParameter("id", id);
+        try {
+            Actor result = (Actor) query.getSingleResult();
+            return result;
+        } catch (PersistenceException e) {
+            return null;
+        }
+
+    }
+
+    private static List<Actor> findAllNative(EntityManager em) {
+        Query query = em.createNativeQuery("select * from actor natural join person ", Actor.class);
+        List<Actor> result = query.getResultList();
+        return result;
+    }
+    private static void renameActor(Long id, String newName, EntityManager em) {
+        em.getTransaction().begin();
+        Query query = em.createQuery("update Actor a set name = :name where id = :id ");
+        query.setParameter("name", newName);
+        query.setParameter("id", id);
+        query.executeUpdate();
+        em.getTransaction().commit();
+    }
 }

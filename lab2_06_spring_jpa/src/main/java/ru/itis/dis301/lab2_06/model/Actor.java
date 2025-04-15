@@ -1,8 +1,11 @@
-package ru.itis.dis301.lab2_05.model;
+package ru.itis.dis301.lab2_06.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToMany;
 import lombok.Getter;
 import lombok.Setter;
+
 import java.util.Set;
 
 @Getter@Setter

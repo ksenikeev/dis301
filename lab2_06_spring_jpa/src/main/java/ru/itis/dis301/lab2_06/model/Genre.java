@@ -1,4 +1,4 @@
-package ru.itis.dis301.lab2_05.model;
+package ru.itis.dis301.lab2_06.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
