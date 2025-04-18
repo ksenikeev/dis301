@@ -1,9 +1,8 @@
-package ru.itis.dis301.lab2_06.model;
+package ru.itis.dis301.lab2_07.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import java.util.Collection;
 import java.util.Date;

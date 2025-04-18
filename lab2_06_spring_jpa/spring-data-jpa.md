@@ -1,12 +1,10 @@
 # Spring Data JPA
 
-https://docs.spring.io/spring-data/data-jpa/snapshot-site/reference/html/
+https://docs.spring.io/spring-data/jpa/reference/jpa.html
 
+## Конфигурация:
 
-
-
-Конфигурация:
-
+```java
 @Configuration
 @EnableJpaRepositories("ru.itis.dis301.lab2_06.repository")
 @EnableTransactionManagement
@@ -58,7 +56,10 @@ public class Config {
         return properties;
     }
 }
+```
 
+## Репозиторий, работающий через EntityManager
+```java
 @Repository
 public class ActorRepository {
 
@@ -78,12 +79,15 @@ public class ActorRepository {
             return actor;
         }
     }
-
 }
+```
 
+### CRUD репозиторий
 
+```java
 public interface GenreRepository extends CrudRepository<Genre, Long> {
 
     @Query("select g from Genre g where g.id = :id ")
     Genre getGenre(@Param("id") Long id);
 }
+```
