@@ -13,6 +13,18 @@
         <label>Название</label><label>${film.name!}</label>
         <label>Дата премьеры</label><label>${film.productionDate!}</label>
 
+
+        <form action="/films/addto" method="post">
+            <div>
+                <label>Название</label><input name="name"/>
+            </div>
+            <select name="genre">
+                <#list genres as genre>
+                    <option value="${genre.id}">${genre.name}</option>
+                </#list>
+            </select>
+            <input type="submit" value="OK"/>
+        </form>
     </div>
 </body>
 </html>

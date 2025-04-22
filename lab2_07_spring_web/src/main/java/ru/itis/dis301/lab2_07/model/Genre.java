@@ -18,6 +18,6 @@ public class Genre {
     private String name;
 
     public String toString() {
-        return "Genre{name='" + name + '}';
+        return "Genre{name='" + name + ", id = " + id + '}';
     }
 }

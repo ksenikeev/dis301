@@ -61,13 +61,7 @@
             <version>6.4.1</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-web</artifactId>
-            <version>2.24.2</version>
-        </dependency>
-
-    </dependencies>
+   </dependencies>
 
     <build>
         <!--
