@@ -8,6 +8,7 @@ import ru.itis.dis301.lab2_07.repository.FilmRepository;
 import ru.itis.dis301.lab2_07.repository.GenreRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FilmService {
@@ -26,6 +27,10 @@ public class FilmService {
 
     public Film save(Film film) {
         return filmRepository.save(film);
+    }
+
+    public Optional<Film> findById(Long id) {
+        return filmRepository.findById(id);
     }
 
     @Transactional
