@@ -26,6 +26,9 @@ public class Film {
     @ManyToMany
     private Collection<Actor> actors;
 
+    @Column(columnDefinition = "boolean default false")
+    private Boolean deleted;
+
     public String toString() {
         return "id: " + id + ", name: " + name;
     }
