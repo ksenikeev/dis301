@@ -8,5 +8,6 @@ import java.util.UUID;
 public class OrganizationDto {
     private UUID uid;
     private String name;
+    private String nameLat;
     private String country;
 }
