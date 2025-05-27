@@ -2,7 +2,6 @@ package ru.itis.dis301.dockertest;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.sql.*;
 
 @RestController
@@ -23,7 +22,7 @@ public class Controller {
             Connection connection =
                     DriverManager.getConnection(
                             // адрес БД , имя пользователя, пароль
-                            "jdbc:postgresql://database:5432/lab05","postgres","passwd");
+                            "jdbc:postgresql://172.17.0.1:5432/lab05","postgres","passwd");
 
             Statement statement =
                     connection.createStatement();
