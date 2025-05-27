@@ -29,6 +29,19 @@ public class SecurityConfig {
 }
 ```
 
+## Аутентификация 
+https://docs.spring.io/spring-security/reference/servlet/authentication/architecture.html
+
+Основные объекты процесса аутентификации (описаны интерфейсами):
+- `SecurityContextHolder` - хранилище сведений об аутентифицированных пользователях
+- `SecurityContext` - доступен из `SecurityContextHolder`, и содержит объект аутентификации (`Authentication`) текущего
+аутентифицированного пользователя
+- `Authentication` - выступает в двух ролях: (1) как объект (токен), содержащий сведения для аутентификации (передается 
+аргументом в метод AuthenticationManager.authenticate); (2) после аутентификации содержит сведения о пользователе
+
+![Изображение](securitycontextholder.png)
+
+
 ## Авторизация
 
 AuthorizationManager
