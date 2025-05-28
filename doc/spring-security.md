@@ -61,7 +61,15 @@ public class MyCustomerService {
 }
 ```
 
-@PreAuthorize("hasRole('ADMIN')")
+Аннотация `@PreAuthorize("hasRole('ADMIN')")` будет проверять имеет ли пользователь роль `ROLE_ADMIN`.
+
+Префикс `ROLE_` используется по умолчанию. Поведение можно изменить:
+```java
+    @Bean
+    static GrantedAuthorityDefaults grantedAuthorityDefaults() {
+        return new GrantedAuthorityDefaults("ROLE_");
+    }
+```
 
 ```java
 @Component

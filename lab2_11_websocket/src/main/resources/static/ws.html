@@ -1,0 +1,101 @@
+<meta charset="utf-8"/>
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="/simple/simple.css" rel="stylesheet">
+    <script src="/simple/simple.js"></script>
+    <title>Messenger</title>
+</head>
+<body>
+<div>
+    <h2>Подключение ...</h2>
+    <div>
+        <label for="username">Укажите ваше имя</label>
+        <input id="username"/>
+    </div>
+    <button onclick="connect()">Соединиться</button>
+</div>
+
+<div>
+    <h2>Отправка сообщения ...</h2>
+    <div>
+        <label for="user">Получатель</label>
+        <input id="user"/>
+    </div>
+    <div>
+        <textarea id="message" rows="7" cols="70"></textarea>
+    </div>
+    <div>
+        <button onclick="send_message()">Отправить</button>
+    </div>
+</div>
+
+<div>
+    <h2>Сообщения пользователей ...</h2>
+    <div id="messages">
+
+    </div>
+</div>
+
+</body>
+
+<script>
+    let webSocket;
+
+    function connect() {
+        let name = document.getElementById('username').value;
+        // соединяемся с сервером, указывая имя пользователя как идентификатор
+        webSocket = new WebSocket('ws://localhost:8080/msg/' + name);
+
+        // обработчик сообщений
+        webSocket.onmessage = function receiveMessage(event) {
+            add_message_to_div(document.getElementById('messages'), event.data);
+            console.log(event.data);
+        };
+
+        webSocket.onopen = function(e) {
+            alert('[open] Соединение установлено');
+        };
+
+        webSocket.onclose = function(event) {
+            if (event.wasClean) {
+                alert('[close] Соединение закрыто чисто, код=${event.code} причина=${event.reason}');
+            } else {
+                // например, сервер убил процесс или сеть недоступна
+                // обычно в этом случае event.code 1006
+                alert('[close] Соединение прервано');
+            }
+        };
+
+        webSocket.onerror = function(error) {
+            alert(`[error]`);
+        };
+    }
+
+    function send_message() {
+        let usr = document.getElementById('user').value;
+        let msg = document.getElementById('message').value;
+        let message = {
+            "user": usr,
+            "text": msg
+        }
+
+        webSocket.send(JSON.stringify(message));
+    }
+
+    function add_message_to_div(div_msg, msg) {
+        let message = JSON.parse(msg);
+        console.log(message);
+        let div_user = document.createElement('div');
+        div_user.classList.add('msg');
+        div_user.innerHTML=message.user;
+        div_msg.appendChild(div_user);
+
+        let div_text = document.createElement('div');
+        div_text.classList.add('msg');
+        div_text.innerHTML=message.text;
+        div_msg.appendChild(div_text);
+    }
+</script>
+
+</html>

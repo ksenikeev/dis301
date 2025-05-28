@@ -10,11 +10,14 @@ import ru.itis.dis301.lab2_10.security.UserDetailImpl;
 @Controller
 public class AdminController {
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/admin/index")
     public String index(Model model) {
         UserDetailImpl userDetails =
                 (UserDetailImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
+
+        SecurityContextHolder.getContext().getAuthentication().getAuthorities().forEach(System.out::println);
         model.addAttribute("user", userDetails.getUsername());
 
 

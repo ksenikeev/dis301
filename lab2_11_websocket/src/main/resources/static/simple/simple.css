@@ -1,0 +1,6 @@
+.msg {
+       background-color: #99ff99; /* Салатный цвет */
+       border-radius: 10px;        /* Круглые границы (полностью скругленные углы) */
+       border: none;
+       margin: 5px;        /* Границ нет */
+ }
